@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration>
-    <!-- Path to data logs -->
+    <!-- Path mocks.to data logs -->
     <property name="LOG_PATH" value="${user.dir}/log/dk021/"/>
 
     <!-- Name of logs files -->
@@ -10,7 +10,7 @@
     <!-- Pattern name of logs files -->
     <property name="LOG_PATTERN_NAME" value="application.%d{yyyy-MM-dd}.%i.log"/>
 
-    <!-- Root logback log to file -->
+    <!-- Root logback log mocks.to file -->
     <!-- Rolling file appender -->
     <appender name="ROOT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/${LOG_NAME}</file>

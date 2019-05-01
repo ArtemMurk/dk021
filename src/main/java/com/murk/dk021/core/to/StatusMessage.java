@@ -4,10 +4,10 @@ import lombok.Data;
 import lombok.NonNull;
 
 @Data
-abstract class StatusMessageTO {
+abstract class StatusMessage {
     private @NonNull STATUS status;
 
-    StatusMessageTO(@NonNull STATUS status) {
+    StatusMessage(@NonNull STATUS status) {
         this.status = status;
     }
 

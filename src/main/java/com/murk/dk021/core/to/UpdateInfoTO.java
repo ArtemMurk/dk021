@@ -4,7 +4,7 @@ import lombok.NonNull;
 import lombok.Value;
 
 @Value
-public class UpdateInfoTO  extends StatusMessageTO{
+public class UpdateInfoTO  extends StatusMessage {
     private @NonNull String message;
 
     public UpdateInfoTO(@NonNull STATUS status, @NonNull String message) {
