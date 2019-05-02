@@ -7,31 +7,47 @@ import com.murk.dk021.core.to.STATUS;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+
+import javax.servlet.Filter;
 
 import static mocks.MockRequest.*;
 import static mocks.exception.MockException.NOT_FOUND_CLASSIFICATOR_EXCEPTION;
 import static mocks.exception.MockException.NOT_VALID_CODE_EXCEPTION;
 import static mocks.to.MockClassificatorTO.*;
-import static mocks.to.MockUpdateInfoTO.UPDATE_INFO_FAIL;
 import static mocks.to.MockUpdateInfoTO.UPDATE_INFO_SUCCESS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml")
+@WebAppConfiguration
 public class ClassificatorControllerTest {
 
     private MockMvc mockMvc;
 
     private ClassificatorServiceImpl service;
+
+    @Autowired
+    private Filter springSecurityFilterChain;
+
+
     private ClassificatorController controller;
 
     @Before
@@ -40,6 +56,8 @@ public class ClassificatorControllerTest {
         controller = new ClassificatorController (service);
 
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
+//                .defaultRequest(post("/dk021/update").with(user("user").roles("ADMIN")))
+                .addFilter(springSecurityFilterChain)
                 .build();
         MockitoAnnotations.initMocks(this);
     }
@@ -120,7 +138,7 @@ public class ClassificatorControllerTest {
         mockMvc.perform(get(GET_CLASSIFICATOR_NOT_FOUND_URI))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("status", is(STATUS.FAIL.name())))
-                .andExpect(jsonPath("cause", is(String.format(ExceptionHelper.NOT_FOUND_CLASSIFICATOR,CODE_NOT_FOUND))));
+                .andExpect(jsonPath("cause", is(String.format(ExceptionHelper.NOT_FOUND_CLASSIFICATOR_MESSAGE,CODE_NOT_FOUND))));
 
         verify(service, times(1)).get(CODE_NOT_FOUND);
         verifyNoMoreInteractions(service);
@@ -134,17 +152,18 @@ public class ClassificatorControllerTest {
         mockMvc.perform(get(GET_CLASSIFICATOR_NODES_NOT_FOUND_URI))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("status", is(STATUS.FAIL.name())))
-                .andExpect(jsonPath("cause", is(String.format(ExceptionHelper.NOT_FOUND_CLASSIFICATOR,CODE_NOT_FOUND))));
+                .andExpect(jsonPath("cause", is(String.format(ExceptionHelper.NOT_FOUND_CLASSIFICATOR_MESSAGE,CODE_NOT_FOUND))));
 
         verify(service, times(1)).getNodes(CODE_NOT_FOUND);
         verifyNoMoreInteractions(service);
     }
 
     @Test
-    public void updateSuccess() throws Exception {
+
+    public void updateAuthorizationSuccess() throws Exception {
         when(service.update()).thenReturn(UPDATE_INFO_SUCCESS);
 
-        mockMvc.perform(post(UPDATE_INFO_URI))
+        mockMvc.perform(post(UPDATE_INFO_URI).with(user("mockAdminUser").roles("ADMIN")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("status", is(UPDATE_INFO_SUCCESS.getStatus().name())))
                 .andExpect(jsonPath("message", is(UPDATE_INFO_SUCCESS.getMessage())));
@@ -154,15 +173,10 @@ public class ClassificatorControllerTest {
     }
 
     @Test
-    public void updateFail() throws Exception {
-        when(service.update()).thenReturn(UPDATE_INFO_FAIL);
+    public void updateUnAuthorized() throws Exception {
 
         mockMvc.perform(post(UPDATE_INFO_URI))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("status", is(UPDATE_INFO_FAIL.getStatus().name())))
-                .andExpect(jsonPath("message", is(UPDATE_INFO_FAIL.getMessage())));
-
-        verify(service, times(1)).update();
-        verifyNoMoreInteractions(service);
+                .andExpect(status().isUnauthorized());
     }
+
 }
