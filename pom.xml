@@ -25,7 +25,7 @@
         <jackson-asl.version>1.9.13</jackson-asl.version>
 
         <!--JUnit-->
-        <junit.version>4.11</junit.version>
+        <junit.version>4.12</junit.version>
 
         <!-- SLF4J -->
         <slf4j.version>1.7.25</slf4j.version>
