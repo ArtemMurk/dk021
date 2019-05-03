@@ -37,7 +37,7 @@
         <assertj.version>3.10.0</assertj.version>
 
         <!-- Mockito -->
-        <mockito.version>2.21.0</mockito.version>
+        <mockito.version>2.27.0</mockito.version>
 
         <!--Spring-->
         <spring-framework.version>4.3.23.RELEASE</spring-framework.version>
@@ -55,6 +55,7 @@
     </properties>
 
     <dependencies>
+
 
         <!--Postgres driver-->
         <dependency>
@@ -191,12 +192,13 @@
             <version>${json-path-assert.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <version>${spring-security.version}</version>
             <scope>test</scope>
         </dependency>
+
+
     </dependencies>
 </project>
