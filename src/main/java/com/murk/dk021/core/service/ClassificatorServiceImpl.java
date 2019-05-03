@@ -21,6 +21,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.murk.dk021.core.exception.ExceptionHelper.NOT_FOUND_CLASSIFICATOR_MESSAGE;
+import static com.murk.dk021.core.service.UpdateMessageHelper.FAIL_UPDATE_ANOTHER_PROCESS_MESSAGE;
+import static com.murk.dk021.core.service.UpdateMessageHelper.START_UPDATE_MESSAGE;
 
 @Service
 @Slf4j
@@ -96,14 +98,14 @@ public class ClassificatorServiceImpl implements ClassificatorService {
         UpdateInfoTO responseUpdate;
         if (updateThread == null || updateThread.isFinish())
         {
-            log.warn("Start update classificators");
+            log.warn(START_UPDATE_MESSAGE);
             updateThread = new UpdateClassificatorProcess(classificatorReader,dao,converter);
             updatePool.execute(updateThread);
-            responseUpdate = new UpdateInfoTO(STATUS.SUCCESS,"Start update classificators");
+            responseUpdate = new UpdateInfoTO(STATUS.SUCCESS,START_UPDATE_MESSAGE);
         } else
             {
-                log.warn("Another update process is running");
-                responseUpdate =  new UpdateInfoTO(STATUS.FAIL,"Another update process is running");
+                log.warn(FAIL_UPDATE_ANOTHER_PROCESS_MESSAGE);
+                responseUpdate =  new UpdateInfoTO(STATUS.FAIL,FAIL_UPDATE_ANOTHER_PROCESS_MESSAGE);
             }
             return responseUpdate;
     }
