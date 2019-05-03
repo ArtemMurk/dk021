@@ -4,6 +4,7 @@ import com.murk.dk021.core.dao.ClassificatorDao;
 import com.murk.dk021.core.exception.NotFoundClassificatorException;
 import com.murk.dk021.core.model.Classificator;
 import com.murk.dk021.core.process.UpdateClassificatorProcess;
+import com.murk.dk021.core.utils.UpdateManager;
 import com.murk.dk021.core.utils.reader.ClassificatorReader;
 import com.murk.dk021.core.to.ClassificatorTO;
 import com.murk.dk021.core.to.STATUS;
@@ -12,7 +13,6 @@ import com.murk.dk021.core.utils.converter.ClassificatorConverter;
 import com.murk.dk021.core.utils.ValidationUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 
@@ -30,12 +30,11 @@ public class ClassificatorServiceImpl implements ClassificatorService {
 
     private ClassificatorDao dao;
     private ClassificatorReader classificatorReader;
-    private ThreadPoolTaskExecutor updatePool;
-    private UpdateClassificatorProcess updateThread;
+    private UpdateManager updatePool;
     private ClassificatorConverter converter;
 
     @Autowired
-    public ClassificatorServiceImpl(ClassificatorDao dao, ClassificatorReader classificatorReader, ThreadPoolTaskExecutor updatePool, ClassificatorConverter converter) {
+    public ClassificatorServiceImpl(ClassificatorDao dao, ClassificatorReader classificatorReader, UpdateManager updatePool, ClassificatorConverter converter) {
         this.dao = dao;
         this.classificatorReader = classificatorReader;
         this.updatePool = updatePool;
@@ -96,17 +95,19 @@ public class ClassificatorServiceImpl implements ClassificatorService {
     {
 
         UpdateInfoTO responseUpdate;
-        if (updateThread == null || updateThread.isFinish())
+        UpdateClassificatorProcess updateThread = new UpdateClassificatorProcess(classificatorReader,dao,converter);
+        boolean success = updatePool.executeIfFree(updateThread);
+        if (success)
         {
             log.warn(START_UPDATE_MESSAGE);
-            updateThread = new UpdateClassificatorProcess(classificatorReader,dao,converter);
-            updatePool.execute(updateThread);
             responseUpdate = new UpdateInfoTO(STATUS.SUCCESS,START_UPDATE_MESSAGE);
-        } else
-            {
-                log.warn(FAIL_UPDATE_ANOTHER_PROCESS_MESSAGE);
-                responseUpdate =  new UpdateInfoTO(STATUS.FAIL,FAIL_UPDATE_ANOTHER_PROCESS_MESSAGE);
-            }
+
+        }
+        else
+        {
+            log.warn(FAIL_UPDATE_ANOTHER_PROCESS_MESSAGE);
+            responseUpdate =  new UpdateInfoTO(STATUS.FAIL,FAIL_UPDATE_ANOTHER_PROCESS_MESSAGE);
+        }
             return responseUpdate;
     }
 
