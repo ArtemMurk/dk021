@@ -23,7 +23,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                //HTTP Basic authentication
                 .httpBasic()
                 .and()
                 .authorizeRequests()
@@ -39,19 +38,5 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
     }
-
-
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        //ok for demo
-//        User.UserBuilder users = User.withDefaultPasswordEncoder();
-//
-//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-//        manager.createUser(users.username("user").password("password").roles("USER").build());
-//        manager.createUser(users.username("admin").password("password").roles("USER", "ADMIN").build());
-//        return manager;
-//    }
-
 
 }
