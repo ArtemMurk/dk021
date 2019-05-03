@@ -1,9 +1,9 @@
 package mocks;
 
 public class MockRequest {
-    public static final String CODE_SUCCESS_1 = "12345671-1";
-    public static final String CODE_SUCCESS_2 = "12345672-2";
-    public static final String CODE_SUCCESS_3 = "12345673-3";
+    public static final String CODE_SUCCESS_1 = "35000000-4";
+    public static final String CODE_SUCCESS_2 = "35100000-5";
+    public static final String CODE_SUCCESS_3 = "35200000-6";
 
     public static final String CODE_NOT_VALID = "12-2";
     public static final String CODE_NOT_FOUND = "11111111-2";

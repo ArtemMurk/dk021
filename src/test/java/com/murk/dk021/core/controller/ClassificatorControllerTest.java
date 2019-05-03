@@ -47,7 +47,6 @@ public class ClassificatorControllerTest {
     @Autowired
     private Filter springSecurityFilterChain;
 
-
     private ClassificatorController controller;
 
     @Before
@@ -56,7 +55,6 @@ public class ClassificatorControllerTest {
         controller = new ClassificatorController (service);
 
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
-//                .defaultRequest(post("/dk021/update").with(user("user").roles("ADMIN")))
                 .addFilter(springSecurityFilterChain)
                 .build();
         MockitoAnnotations.initMocks(this);
@@ -73,13 +71,13 @@ public class ClassificatorControllerTest {
     @Test
     public void getClassificatorSuccess() throws Exception {
 
-        when(service.get(CODE_SUCCESS_1)).thenReturn(CLASSIFICATOR_1);
+        when(service.get(CODE_SUCCESS_1)).thenReturn(CLASSIFICATOR_TO_1);
 
         mockMvc.perform(get(GET_CLASSIFICATOR_SUCCESS_URI_1))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("status", is(STATUS.SUCCESS.name())))
-                .andExpect(jsonPath("code", is(CLASSIFICATOR_1.getCode())))
-                .andExpect(jsonPath("name", is(CLASSIFICATOR_1.getName())));
+                .andExpect(jsonPath("code", is(CLASSIFICATOR_TO_1.getCode())))
+                .andExpect(jsonPath("name", is(CLASSIFICATOR_TO_1.getName())));
 
         verify(service, times(1)).get(CODE_SUCCESS_1);
         verifyNoMoreInteractions(service);
@@ -87,16 +85,16 @@ public class ClassificatorControllerTest {
 
     @Test
     public void getClassificatorNodesSuccess() throws Exception {
-        when(service.getNodes(CODE_SUCCESS_1)).thenReturn(NODES_FOR_CLASSIFICATOR_1);
+        when(service.getNodes(CODE_SUCCESS_1)).thenReturn(NODES_FOR_CLASSIFICATOR_TO_1);
 
         mockMvc.perform(get(GET_CLASSIFICATOR_NODES_SUCCESS_URI_1))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].status", is(STATUS.SUCCESS.name())))
-                .andExpect(jsonPath("$[0].code", is(CLASSIFICATOR_2.getCode())))
-                .andExpect(jsonPath("$[0].name", is(CLASSIFICATOR_2.getName())))
+                .andExpect(jsonPath("$[0].code", is(CLASSIFICATOR_TO_2.getCode())))
+                .andExpect(jsonPath("$[0].name", is(CLASSIFICATOR_TO_2.getName())))
                 .andExpect(jsonPath("$[1].status", is(STATUS.SUCCESS.name())))
-                .andExpect(jsonPath("$[1].code", is(CLASSIFICATOR_3.getCode())))
-                .andExpect(jsonPath("$[1].name", is(CLASSIFICATOR_3.getName())));
+                .andExpect(jsonPath("$[1].code", is(CLASSIFICATOR_TO_3.getCode())))
+                .andExpect(jsonPath("$[1].name", is(CLASSIFICATOR_TO_3.getName())));
 
         verify(service, times(1)).getNodes(CODE_SUCCESS_1);
         verifyNoMoreInteractions(service);
@@ -159,7 +157,6 @@ public class ClassificatorControllerTest {
     }
 
     @Test
-
     public void updateAuthorizationSuccess() throws Exception {
         when(service.update()).thenReturn(UPDATE_INFO_SUCCESS);
 
