@@ -36,19 +36,24 @@ public class UpdateClassificatorProcess implements Runnable{
 
             Map<String,String> classificatorsTo = classificatorReader.read(classificatorURIPath);
 
-            if (classificatorsTo == null || classificatorsTo.size()>0)
+            if (classificatorsTo != null && classificatorsTo.size()>0)
             {
                 ValidationUtil.validateCode(classificatorsTo.keySet());
 
                 Map<Integer, Classificator> classificators = converter.convert(classificatorsTo);
-
-                dao.update(classificators);
+                if (classificators != null && classificators.size()>0)
+                {
+                    dao.update(classificators);
+                } else
+                    {
+                        log.error("Exception in converter classificators from path = {}",classificatorURIPath);
+                    }
             }
             else
             {
-                log.error("Zero classificators from path = ",classificatorURIPath);
+                log.error("Zero classificators from path = {}",classificatorURIPath);
             }
-        } catch (IllegalArgumentException ex)
+        } catch (Exception ex)
         {
             log.error(ex.getMessage());
         } finally {
