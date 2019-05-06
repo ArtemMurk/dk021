@@ -15,7 +15,7 @@ public class MockClassificatorTO {
 
     public static final Set<ClassificatorTO> NODES_FOR_CLASSIFICATOR_TO_1 = new LinkedHashSet<>(Arrays.asList(CLASSIFICATOR_TO_2, CLASSIFICATOR_TO_3));
 
-    public static final Set<ClassificatorTO> NODES_FOR_ROOT = new LinkedHashSet<>(Collections.singletonList(CLASSIFICATOR_TO_1));
+    public static final Set<ClassificatorTO> NODES_FOR_ROOT_TO = new LinkedHashSet<>(Collections.singletonList(CLASSIFICATOR_TO_1));
 
     public static final Map<String,String> ALL_CLASSIFICATORS_TO = new HashMap<>();
 

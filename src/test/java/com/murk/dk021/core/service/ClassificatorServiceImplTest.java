@@ -116,7 +116,7 @@ public class ClassificatorServiceImplTest {
 
         Set<ClassificatorTO> classificatorsTOActual = service.getRootNodes();
 
-        assertThat(NODES_FOR_ROOT).isEqualTo(classificatorsTOActual);
+        assertThat(NODES_FOR_ROOT_TO).isEqualTo(classificatorsTOActual);
 
         verify(dao, times(1)).getRootNodes();
         verify(converter, times(1)).convert(CLASSIFICATOR_MODEL_1);

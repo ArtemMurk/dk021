@@ -103,7 +103,7 @@ public class ClassificatorControllerTest {
 
     @Test
     public void getClassificatorRootNodesSuccess() throws Exception {
-        when(service.getRootNodes()).thenReturn(NODES_FOR_ROOT);
+        when(service.getRootNodes()).thenReturn(NODES_FOR_ROOT_TO);
 
         mockMvc.perform(get(GET_CLASSIFICATOR_NODES_ROOT_SUCCESS_URI))
                 .andExpect(status().isOk())
