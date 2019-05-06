@@ -48,7 +48,9 @@ public class ClassificatorServiceImpl implements ClassificatorService {
         log.info("Get classificator, code = {}",code);
 
         int id = getIdFromCode(code);
-        Classificator classificator = dao.get(id);
+        short num = getNumFromCode(code);
+
+        Classificator classificator = dao.get(id,num);
         if (classificator != null)
         {
             classificatorTO = converter.convert(classificator);
@@ -69,10 +71,11 @@ public class ClassificatorServiceImpl implements ClassificatorService {
 
         ValidationUtil.validateCode(code);
         int id = getIdFromCode(code);
+        short num = getNumFromCode(code);
 
         log.info("Get classificator nodes, code = {}",code);
 
-        Set<Classificator> classificators= dao.getNodes(id);
+        Set<Classificator> classificators= dao.getNodes(id,num);
         if (classificators != null && classificators.size()>0)
         {
             classificatorsTo = classificators
@@ -85,6 +88,10 @@ public class ClassificatorServiceImpl implements ClassificatorService {
         }
 
         return classificatorsTo;
+    }
+
+    private short getNumFromCode(String code) {
+        return Short.parseShort(code.split("-")[1]);
     }
 
     private int getIdFromCode(String code) {
@@ -117,4 +124,21 @@ public class ClassificatorServiceImpl implements ClassificatorService {
             updatePool.shutdown();
     }
 
+    public Set<ClassificatorTO> getRootNodes() {
+        Set<ClassificatorTO> classificatorsTo;
+
+        Set<Classificator> classificators= dao.getRootNodes();
+        if (classificators != null && classificators.size()>0)
+        {
+            classificatorsTo = classificators
+                    .stream()
+                    .map(converter::convert)
+                    .collect(Collectors.toSet());
+        } else
+        {
+            throw new NotFoundClassificatorException(String.format(NOT_FOUND_CLASSIFICATOR_MESSAGE,"for root nodes"));
+        }
+
+        return classificatorsTo;
+    }
 }

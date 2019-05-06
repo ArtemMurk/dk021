@@ -45,6 +45,13 @@ public class ClassificatorController {
         return new ResponseEntity<>(nodes, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/classificator/nodes/", method = RequestMethod.GET)
+    ResponseEntity<Set<ClassificatorTO>> getRootNodes()
+    {
+        Set<ClassificatorTO> nodes = service.getRootNodes();
+        return new ResponseEntity<>(nodes, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     ResponseEntity<UpdateInfoTO> update()
     {

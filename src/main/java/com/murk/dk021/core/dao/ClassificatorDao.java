@@ -6,8 +6,11 @@ import java.util.Map;
 import java.util.Set;
 
 public interface ClassificatorDao {
-    Classificator get(int id);
-    Set<Classificator> getNodes(int id);
+    Classificator get(int id, short num);
+    Set<Classificator> getNodes(int id, short num);
+    Set<Classificator> getRootNodes();
 
     void update(Map<Integer, Classificator> classificators);
+
+
 }
