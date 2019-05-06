@@ -13,9 +13,15 @@ import java.util.regex.Pattern;
 public class ClassificatorConverterImpl implements ClassificatorConverter {
 
     public  ClassificatorTO convert(Classificator classificator) {
-        String code = classificator.getId()+"-"+classificator.getNum();
+        StringBuilder code = new StringBuilder(classificator.getId() + "-" + classificator.getNum());
+
+        while (code.length()<10)
+        {
+            code.insert(0, "0");
+        }
+
         String name = classificator.getName();
-        return new ClassificatorTO(code,name);
+        return new ClassificatorTO(code.toString(),name);
     }
 
     public  Map<Integer,Classificator> convert(Map<String,String> classificatorsTo)
