@@ -17,10 +17,10 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
-import static mocks.ClassificatorInfo.CLASSIFICATOR_NOT_FOUND_ID;
-import static mocks.ClassificatorInfo.CLASSIFICATOR_NOT_FOUND_NUM;
+import static mocks.ClassificatorInfo.*;
 import static mocks.model.MockModels.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -88,15 +88,68 @@ public class ClassificatorDaoTest {
     }
 
     @Test
-    public void updateSuccess()
+    public void updateWithDelete()
     {
-        dao.update(ALL_CLASSIFICATORS_MODELS);
 
         ALL_CLASSIFICATORS_MODELS.forEach((id,classififcator)->
         {
             Classificator classificatorFromDao = dao.get(id,classififcator.getNum());
             assertThat(classififcator).isEqualToComparingFieldByField(classificatorFromDao);
         });
+
+        Map<Integer,Classificator> classificatorsWithoutOne = new HashMap<>(ALL_CLASSIFICATORS_MODELS);
+        classificatorsWithoutOne.remove(CLASSIFICATOR_2_ID);
+
+        dao.update(classificatorsWithoutOne);
+
+        Classificator deleteClassificator = dao.get(CLASSIFICATOR_2_ID,CLASSIFICATOR_2_NUM);
+        assertThat(deleteClassificator).isNull();
+
+
+    }
+//
+    @Test
+    public void updateWithChangeInfo()
+    {
+
+        ALL_CLASSIFICATORS_MODELS.forEach((id,classififcator)->
+        {
+            Classificator classificatorFromDao = dao.get(id,classififcator.getNum());
+            assertThat(classififcator).isEqualToComparingFieldByField(classificatorFromDao);
+        });
+
+
+        Map<Integer,Classificator> classificatorsChanges = new HashMap<>(ALL_CLASSIFICATORS_MODELS);
+        Classificator change = dao.get(CLASSIFICATOR_2_ID,CLASSIFICATOR_2_NUM);
+        change.setName("new change name");
+        classificatorsChanges.put(CLASSIFICATOR_2_ID,change);
+
+        dao.update(classificatorsChanges);
+
+        Classificator changesClassificatorFromDao = dao.get(CLASSIFICATOR_2_ID,CLASSIFICATOR_2_NUM);
+        assertThat(changesClassificatorFromDao).isEqualToComparingFieldByField(change);
+
+
+    }
+
+    @Test
+    public void updateWithNewInfo()
+    {
+
+        ALL_CLASSIFICATORS_MODELS.forEach((id,classififcator)->
+        {
+            Classificator classificatorFromDao = dao.get(id,classififcator.getNum());
+            assertThat(classififcator).isEqualToComparingFieldByField(classificatorFromDao);
+        });
+
+        Map<Integer,Classificator> classificatorsChanges = new HashMap<>(ALL_CLASSIFICATORS_MODELS);
+        Classificator newClassificator = new Classificator(12345678,(short)2,null,"new root classififcator");
+        classificatorsChanges.put(newClassificator.getId(),newClassificator);
+
+        dao.update(classificatorsChanges);
+
+        Classificator newClassificatorFromDao = dao.get(newClassificator.getId(),newClassificator.getNum());
+        assertThat(newClassificatorFromDao).isEqualToComparingFieldByField(newClassificator);
     }
 
 
