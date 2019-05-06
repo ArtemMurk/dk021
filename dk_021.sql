@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS  DK_021;
+CREATE TABLE IF NOT EXISTS DK_021
+(
+	id INTEGER NOT NULL,
+	num SMALLINT NOT NULL,
+	parentId INTEGER,
+	name VARCHAR(300) NOT NULL,
+	constraint code PRIMARY KEY(id,num),
+	constraint uniqueId UNIQUE(id)
+)
