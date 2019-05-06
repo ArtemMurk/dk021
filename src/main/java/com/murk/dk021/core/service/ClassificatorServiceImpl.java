@@ -90,6 +90,24 @@ public class ClassificatorServiceImpl implements ClassificatorService {
         return classificatorsTo;
     }
 
+    public Set<ClassificatorTO> getRootNodes() {
+        Set<ClassificatorTO> classificatorsTo;
+
+        Set<Classificator> classificators= dao.getRootNodes();
+        if (classificators != null && classificators.size()>0)
+        {
+            classificatorsTo = classificators
+                    .stream()
+                    .map(converter::convert)
+                    .collect(Collectors.toSet());
+        } else
+        {
+            throw new NotFoundClassificatorException(String.format(NOT_FOUND_CLASSIFICATOR_MESSAGE,"for root nodes"));
+        }
+
+        return classificatorsTo;
+    }
+
     private short getNumFromCode(String code) {
         return Short.parseShort(code.split("-")[1]);
     }
@@ -124,21 +142,5 @@ public class ClassificatorServiceImpl implements ClassificatorService {
             updatePool.shutdown();
     }
 
-    public Set<ClassificatorTO> getRootNodes() {
-        Set<ClassificatorTO> classificatorsTo;
 
-        Set<Classificator> classificators= dao.getRootNodes();
-        if (classificators != null && classificators.size()>0)
-        {
-            classificatorsTo = classificators
-                    .stream()
-                    .map(converter::convert)
-                    .collect(Collectors.toSet());
-        } else
-        {
-            throw new NotFoundClassificatorException(String.format(NOT_FOUND_CLASSIFICATOR_MESSAGE,"for root nodes"));
-        }
-
-        return classificatorsTo;
-    }
 }

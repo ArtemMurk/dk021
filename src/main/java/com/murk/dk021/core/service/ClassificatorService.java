@@ -8,5 +8,6 @@ import java.util.Set;
 public interface ClassificatorService {
     ClassificatorTO get(String code);
     Set<ClassificatorTO> getNodes(String code);
+    Set<ClassificatorTO> getRootNodes();
     UpdateInfoTO update();
 }
