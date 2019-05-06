@@ -44,6 +44,8 @@ public class UpdateClassificatorProcess implements Runnable{
                 if (classificators != null && classificators.size()>0)
                 {
                     dao.update(classificators);
+
+                    log.warn("Update info SUCCESS");
                 } else
                     {
                         log.error("Exception in converter classificators from path = {}",classificatorURIPath);
