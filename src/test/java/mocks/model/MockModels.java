@@ -17,6 +17,8 @@ public class MockModels {
 
     public static final Set<Classificator> NODES_FOR_CLASSIFICATOR_MODEL_1 = new LinkedHashSet<>(Arrays.asList(CLASSIFICATOR_MODEL_2, CLASSIFICATOR_MODEL_3));
 
+    public static final Set<Classificator> ROOT_NODES = new LinkedHashSet<>(Collections.singletonList(CLASSIFICATOR_MODEL_1));
+
     public static final Map<Integer,Classificator> ALL_CLASSIFICATORS_MODELS = new HashMap<>();
 
     static {

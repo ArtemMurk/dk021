@@ -71,14 +71,14 @@ public class ClassificatorServiceImplTest {
     public void getSuccess()
     {
 
-        when(dao.get(CLASSIFICATOR_1_ID)).thenReturn(CLASSIFICATOR_MODEL_1);
+        when(dao.get(CLASSIFICATOR_1_ID,CLASSIFICATOR_1_NUM)).thenReturn(CLASSIFICATOR_MODEL_1);
         when(converter.convert(CLASSIFICATOR_MODEL_1)).thenReturn(CLASSIFICATOR_TO_1);
 
         ClassificatorTO classificatorTOActual = service.get(CODE_SUCCESS_1);
 
         assertThat(CLASSIFICATOR_TO_1).isEqualToComparingFieldByField(classificatorTOActual);
 
-        verify(dao, times(1)).get(CLASSIFICATOR_1_ID);
+        verify(dao, times(1)).get(CLASSIFICATOR_1_ID,CLASSIFICATOR_1_NUM);
         verify(converter, times(1)).convert(CLASSIFICATOR_MODEL_1);
 
         verifyNoMoreInteractions(dao);
@@ -89,7 +89,7 @@ public class ClassificatorServiceImplTest {
     public void getNodesSuccess()
     {
 
-        when(dao.getNodes(CLASSIFICATOR_1_ID)).thenReturn(NODES_FOR_CLASSIFICATOR_MODEL_1);
+        when(dao.getNodes(CLASSIFICATOR_1_ID,CLASSIFICATOR_1_NUM)).thenReturn(NODES_FOR_CLASSIFICATOR_MODEL_1);
         when(converter.convert(CLASSIFICATOR_MODEL_2)).thenReturn(CLASSIFICATOR_TO_2);
         when(converter.convert(CLASSIFICATOR_MODEL_3)).thenReturn(CLASSIFICATOR_TO_3);
 
@@ -97,9 +97,29 @@ public class ClassificatorServiceImplTest {
 
         assertThat(NODES_FOR_CLASSIFICATOR_TO_1).isEqualTo(classificatorsTOActual);
 
-        verify(dao, times(1)).getNodes(CLASSIFICATOR_1_ID);
+        verify(dao, times(1)).getNodes(CLASSIFICATOR_1_ID,CLASSIFICATOR_1_NUM);
         verify(converter, times(1)).convert(CLASSIFICATOR_MODEL_2);
         verify(converter, times(1)).convert(CLASSIFICATOR_MODEL_3);
+
+        verifyNoMoreInteractions(dao);
+        verifyNoMoreInteractions(converter);
+    }
+
+
+    @Test
+    public void getRootNodesSuccess()
+    {
+
+        when(dao.getRootNodes()).thenReturn(ROOT_NODES);
+        when(converter.convert(CLASSIFICATOR_MODEL_1)).thenReturn(CLASSIFICATOR_TO_1);
+
+
+        Set<ClassificatorTO> classificatorsTOActual = service.getRootNodes();
+
+        assertThat(NODES_FOR_ROOT).isEqualTo(classificatorsTOActual);
+
+        verify(dao, times(1)).getRootNodes();
+        verify(converter, times(1)).convert(CLASSIFICATOR_MODEL_1);
 
         verifyNoMoreInteractions(dao);
         verifyNoMoreInteractions(converter);
@@ -128,7 +148,7 @@ public class ClassificatorServiceImplTest {
     @Test(expected = NotFoundClassificatorException.class)
     public void getNotFoundClassificator()
     {
-        when(dao.get(CLASSIFICATOR_NOT_FOUND_ID)).thenReturn(null);
+        when(dao.get(CLASSIFICATOR_NOT_FOUND_ID,CLASSIFICATOR_NOT_FOUND_NUM )).thenReturn(null);
 
         service.get(CODE_NOT_FOUND);
 
@@ -140,7 +160,7 @@ public class ClassificatorServiceImplTest {
     @Test(expected = NotFoundClassificatorException.class)
     public void getNotFoundNodesIsEmpty()
     {
-        when(dao.getNodes(CLASSIFICATOR_NOT_FOUND_ID)).thenReturn(new HashSet<>());
+        when(dao.getNodes(CLASSIFICATOR_NOT_FOUND_ID,CLASSIFICATOR_NOT_FOUND_NUM )).thenReturn(new HashSet<>());
 
         service.getNodes(CODE_NOT_FOUND);
 
@@ -153,7 +173,7 @@ public class ClassificatorServiceImplTest {
     @Test(expected = NotFoundClassificatorException.class)
     public void getNotFoundNodes()
     {
-        when(dao.getNodes(CLASSIFICATOR_NOT_FOUND_ID)).thenReturn(null);
+        when(dao.getNodes(CLASSIFICATOR_NOT_FOUND_ID,CLASSIFICATOR_NOT_FOUND_NUM )).thenReturn(null);
 
         service.getNodes(CODE_NOT_FOUND);
 

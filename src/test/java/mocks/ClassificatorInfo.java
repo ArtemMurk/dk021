@@ -20,5 +20,6 @@ public class ClassificatorInfo {
     public static final Integer CLASSIFICATOR_3_PARENTID = CLASSIFICATOR_1_ID;
 
     public static final int CLASSIFICATOR_NOT_FOUND_ID = Integer.parseInt(CODE_NOT_FOUND.split("-")[0]);
+    public static final short CLASSIFICATOR_NOT_FOUND_NUM = Short.parseShort(CODE_NOT_FOUND.split("-")[1]);
 
 }

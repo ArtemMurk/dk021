@@ -102,6 +102,20 @@ public class ClassificatorControllerTest {
     }
 
     @Test
+    public void getClassificatorRootNodesSuccess() throws Exception {
+        when(service.getRootNodes()).thenReturn(NODES_FOR_ROOT);
+
+        mockMvc.perform(get(GET_CLASSIFICATOR_NODES_ROOT_SUCCESS_URI))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].status", is(STATUS.SUCCESS.name())))
+                .andExpect(jsonPath("$[0].code", is(CLASSIFICATOR_TO_1.getCode())))
+                .andExpect(jsonPath("$[0].name", is(CLASSIFICATOR_TO_1.getName())));
+
+        verify(service, times(1)).getRootNodes();
+        verifyNoMoreInteractions(service);
+    }
+
+    @Test
     public void notValidClassificatorCode() throws Exception {
         when(service.get(CODE_NOT_VALID)).thenThrow(NOT_VALID_CODE_EXCEPTION);
 
