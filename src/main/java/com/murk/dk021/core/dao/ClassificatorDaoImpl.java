@@ -1,5 +1,6 @@
 package com.murk.dk021.core.dao;
 
+import com.murk.dk021.core.exception.EmptyClassificatorException;
 import com.murk.dk021.core.model.Classificator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp.BasicDataSource;
@@ -114,6 +115,12 @@ public class ClassificatorDaoImpl implements ClassificatorDao {
 
     @Override
     public void update(Map<Integer, Classificator> classificators) {
+
+        if (classificators == null || classificators.size()==0)
+        {
+            throw new EmptyClassificatorException("classificators is empty");
+        }
+
         try (Connection connection = ds.getConnection()){
             connection.setAutoCommit(false);
 
