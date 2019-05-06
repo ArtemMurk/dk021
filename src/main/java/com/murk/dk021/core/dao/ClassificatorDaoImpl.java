@@ -98,12 +98,17 @@ public class ClassificatorDaoImpl implements ClassificatorDao {
     private Classificator getClassificatorFromResultSet(ResultSet resultSet) throws SQLException {
         Classificator classificator;
 
-        int idC = resultSet.getInt("id");
-        short  numC= resultSet.getShort("num");
-        Integer parentidC = resultSet.getInt("parentid");
-        String nameC = resultSet.getString("name");
+        int id = resultSet.getInt("id");
+        short  num= resultSet.getShort("num");
+        Integer parentid = resultSet.getInt("parentid");
+        if (parentid == 0)
+        {
+            parentid = null;
+        }
 
-        classificator = new Classificator(idC,numC,parentidC,nameC);
+        String name = resultSet.getString("name");
+
+        classificator = new Classificator(id,num,parentid,name);
         return classificator;
     }
 
