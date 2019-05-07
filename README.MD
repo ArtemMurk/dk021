@@ -1,6 +1,10 @@
 # DK-021
 
-[![LICENSE](https://img.shields.io/badge/LICENSE-Apache%202.0-blue.svg)](LICENSE.md)
+ Technology     | Badge |
+|:--------------:|:-----:|
+| License        | [![LICENSE](https://img.shields.io/badge/LICENSE-Apache%202.0-blue.svg)](LICENSE.md) |
+| Travis CI      | [![Build Status](https://travis-ci.org/ArtemMurk/dk021.svg?branch=master)](https://travis-ci.org/ArtemMurk/dk021) |
+
 
 ## Информация о проекте
 Данный микросервис работает с классификатором ДК-021. Архитектура построена по REST принципу с использованием Spring. Формат отдаваемых данных JSON.
