@@ -32,28 +32,28 @@ public class ClassificatorController {
     }
 
     @RequestMapping(value = "/classificator/{code}", method = RequestMethod.GET)
-    ResponseEntity<ClassificatorTO> get(@PathVariable String code)
+    private ResponseEntity<ClassificatorTO> get(@PathVariable String code)
     {
         ClassificatorTO classificator = service.get(code);
         return new ResponseEntity<>(classificator, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/classificator/nodes/{code}", method = RequestMethod.GET)
-    ResponseEntity<Set<ClassificatorTO>> getNodes(@PathVariable String code)
+    private ResponseEntity<Set<ClassificatorTO>> getNodes(@PathVariable String code)
     {
         Set<ClassificatorTO> nodes = service.getNodes(code);
         return new ResponseEntity<>(nodes, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/classificator/nodes/", method = RequestMethod.GET)
-    ResponseEntity<Set<ClassificatorTO>> getRootNodes()
+    private ResponseEntity<Set<ClassificatorTO>> getRootNodes()
     {
         Set<ClassificatorTO> nodes = service.getRootNodes();
         return new ResponseEntity<>(nodes, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    ResponseEntity<UpdateInfoTO> update()
+    private ResponseEntity<UpdateInfoTO> update()
     {
         UpdateInfoTO info = service.update();
 
@@ -62,14 +62,14 @@ public class ClassificatorController {
 
 
     @ExceptionHandler(value= { NotValidCodeException.class})
-    public ResponseEntity<ExceptionTO> notValidCode(RuntimeException ex, WebRequest request)
+    private ResponseEntity<ExceptionTO> notValidCode(RuntimeException ex, WebRequest request)
     {
         log.error(ex.getMessage());
         return new ResponseEntity<>(new ExceptionTO(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value= { NotFoundClassificatorException.class})
-    public ResponseEntity<ExceptionTO> notFoundClassificator(RuntimeException ex, WebRequest request)
+    private ResponseEntity<ExceptionTO> notFoundClassificator(RuntimeException ex, WebRequest request)
     {
         log.error(ex.getMessage());
         return new ResponseEntity<>(new ExceptionTO(ex.getMessage()), HttpStatus.NOT_FOUND);

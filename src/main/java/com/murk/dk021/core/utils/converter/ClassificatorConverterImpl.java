@@ -81,7 +81,7 @@ public class ClassificatorConverterImpl implements ClassificatorConverter {
 
         //check chars for root
         short checkChar = 2;
-        if (id.charAt(checkChar) !='0' && !id.equals("99999999"))
+        if (id.charAt(checkChar) !='0' && !"99999999".equals(id))
         {
             result = getParentId(id);
         }

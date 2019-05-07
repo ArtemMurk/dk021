@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ClassificatorConverterTest {
 
     @Autowired
-    ClassificatorConverter classificatorConverter;
+    private ClassificatorConverter classificatorConverter;
 
     @Test
     public void convertClassificatorSuccess()

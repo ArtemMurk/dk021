@@ -15,7 +15,7 @@ import java.util.Properties;
  */
 public final class PropertiesReader
 {
-    public PropertiesReader()
+    private PropertiesReader()
     {
     }
 

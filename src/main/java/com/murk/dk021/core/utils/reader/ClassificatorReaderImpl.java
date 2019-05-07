@@ -16,6 +16,7 @@ import java.util.Map;
 public class ClassificatorReaderImpl implements ClassificatorReader {
     private  ObjectMapper mapper;
 
+    public ClassificatorReaderImpl()
     {
         mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule("classificatorDeser", Version.unknownVersion());
