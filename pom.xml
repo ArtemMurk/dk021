@@ -24,7 +24,7 @@
         <lombok.version>1.18.6</lombok.version>
 
         <!--Jackson-->
-        <jackson.version>2.9.5</jackson.version>
+        <jackson.version>2.9.8</jackson.version>
         <jackson-asl.version>1.9.13</jackson-asl.version>
 
         <!--JUnit-->
