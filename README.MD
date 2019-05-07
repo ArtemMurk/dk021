@@ -49,8 +49,7 @@
 
 #### База данных
 * Apache Сonnection Pool
-* Postgres driver
-* Hsqldb driver
+* JDBC
 
 #### Сериализация и десериализация
 * Jackson
@@ -79,7 +78,7 @@
 Если у вас возникли предложения или замечания по проекту с удовольствием их выслушаю.
 
 * **Автор**: Артём Муравлёв
-* **Linkeidn**: [My Linkeidn](www.linkedin.com/in/artem-muravlov)
+* **Linkeidn**: [My Linkeidn](https://linkedin.com/in/artem-muravlov)
 * **Telegram**: @artem_murk
 * **Почта**: muravlevars@gmail.com
 
