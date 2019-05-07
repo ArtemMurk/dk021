@@ -5,6 +5,7 @@ import com.murk.dk021.core.utils.converter.ClassificatorConverter;
 import com.murk.dk021.core.utils.reader.ClassificatorReader;
 import com.murk.dk021.core.utils.reader.PropertiesReader;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -35,11 +36,12 @@ public class UpdateClassificatorProcessTest {
 
     private UpdateClassificatorProcess process;
 
-    private String path;
+    private static String path;
 
-
+    @BeforeClass
+    public static void init()
     {
-        URL pathToProperties = getClass().getClassLoader().getResource("classificator.properties");
+        URL pathToProperties = UpdateClassificatorProcessTest .class.getClassLoader().getResource("classificator.properties");
         path =  PropertiesReader.readProperty(pathToProperties.getPath(),"path");
     }
 
