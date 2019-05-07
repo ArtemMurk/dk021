@@ -30,7 +30,7 @@ public class ClassificatorDaoImpl implements ClassificatorDao {
     public Classificator get(int id, short num) {
         Classificator classificator = null;
         try (Connection connection = ds.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement(SELECT_CLASSIFICATOR);)
+            try (PreparedStatement statement = connection.prepareStatement(SELECT_CLASSIFICATOR))
             {
             statement.setInt(1,id);
             statement.setShort(2,num);
@@ -152,7 +152,6 @@ public class ClassificatorDaoImpl implements ClassificatorDao {
 
     private void insertInTempTable(Connection connection, Map<Integer, Classificator> classificators) throws SQLException {
         for (Map.Entry<Integer, Classificator> entry : classificators.entrySet()) {
-            Integer id = entry.getKey();
             Classificator classificator = entry.getValue();
 
             insertInTempTable(connection,classificator);
@@ -160,7 +159,7 @@ public class ClassificatorDaoImpl implements ClassificatorDao {
     }
 
     private void insertInTempTable(Connection connection, Classificator classificator) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(INSERT_CLASSIFICATOR);)
+        try (PreparedStatement statement = connection.prepareStatement(INSERT_CLASSIFICATOR))
         {
             statement.setInt(1,classificator.getId());
             statement.setShort(2,classificator.getNum());
