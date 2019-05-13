@@ -2,6 +2,7 @@
 
  Technology     | Badge |
 |:--------------:|:-----:|
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ec3c2c34fd644934b4b62165bc615381)](https://app.codacy.com/app/ArtemMurk/dk021?utm_source=github.com&utm_medium=referral&utm_content=ArtemMurk/dk021&utm_campaign=Badge_Grade_Settings)
 | License        | [![LICENSE](https://img.shields.io/badge/LICENSE-Apache%202.0-blue.svg)](LICENSE.md) |
 | Travis CI      | [![Build Status](https://travis-ci.org/ArtemMurk/dk021.svg?branch=master)](https://travis-ci.org/ArtemMurk/dk021) |
 | Codacy         | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/50afef852fed4299a0d27aa18a3a7e56)](https://www.codacy.com/app/ArtemMurk/dk021?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ArtemMurk/dk021&amp;utm_campaign=Badge_Grade) |
